@@ -1,16 +1,68 @@
 package ru.tinkoff.fintech.refactoring
 
-data class Pizza(
-    val name: String,
+
+abstract class Pizza {
+
+    abstract val name: String
+    abstract val ingredients: List<IngredientWithCount>
+
+    fun calculateCost(): Double {
+        return ingredients.sumOf { it.ingredient.price * it.count }
+    }
+
+}
+
+data class IngredientWithCount(
+    val ingredient: Ingredient,
+    val count: Int
 )
 
-fun getIngredient(pizza: Pizza): List<Pair<String, Int>> {
-    return when (pizza.name) {
-        "карбонара" -> listOf("яйца" to 1, "бекон" to 2, "тесто" to 1, "сыр" to 2)
-        "маринара" -> listOf("томат" to 2, "оливки" to 3, "тесто" to 1)
-        "сардиния" -> listOf("салями" to 3, "оливки" to 1, "тесто" to 1, "сыр" to 3)
-        "вальтеллина" -> listOf("вяленая говядина" to 1, "зелень" to 1, "тесто" to 1, "пармезан" to 2)
-        "крестьянская" -> listOf("грибы" to 3, "томат" to 1, "тесто" to 1, "спаржа" to 1, "мясное ассорти" to 1)
-        else -> emptyList()
-    }
-}
+data class Carbonara(
+    override val name: String = "Карбонара",
+    override val ingredients: List<IngredientWithCount> = listOf(
+        IngredientWithCount(Eggs(), 1),
+        IngredientWithCount(Bacon(), 2),
+        IngredientWithCount(Dough(), 1),
+        IngredientWithCount(Cheese(), 1)
+    )
+) : Pizza()
+
+data class Marinara(
+    override val name: String = "Маринара",
+    override val ingredients: List<IngredientWithCount> = listOf(
+        IngredientWithCount(Tomato(), 2),
+        IngredientWithCount(Olives(), 3),
+        IngredientWithCount(Dough(), 1)
+    )
+) : Pizza()
+
+data class Sardinia(
+    override val name: String = "Сардиния",
+    override val ingredients: List<IngredientWithCount> = listOf(
+        IngredientWithCount(Salami(), 3),
+        IngredientWithCount(Olives(), 1),
+        IngredientWithCount(Dough(), 1),
+        IngredientWithCount(Cheese(), 3)
+    )
+) : Pizza()
+
+data class Valtellina(
+    override val name: String = "Вальтеллина",
+    override val ingredients: List<IngredientWithCount> = listOf(
+        IngredientWithCount(JerkedBeef(), 1),
+        IngredientWithCount(Asparagus(), 1),
+        IngredientWithCount(Dough(), 1),
+        IngredientWithCount(Parmesan(), 2)
+    )
+) : Pizza()
+
+data class Peasant(
+    override val name: String = "Крестьянская",
+    override val ingredients: List<IngredientWithCount> = listOf(
+        IngredientWithCount(Mushrooms(), 3),
+        IngredientWithCount(Tomato(), 1),
+        IngredientWithCount(Dough(), 1),
+        IngredientWithCount(Asparagus(), 1),
+        IngredientWithCount(MeatMix(), 1)
+    )
+) : Pizza()
