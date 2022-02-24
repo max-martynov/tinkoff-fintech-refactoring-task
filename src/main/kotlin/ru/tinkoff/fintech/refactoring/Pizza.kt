@@ -1,9 +1,12 @@
 package ru.tinkoff.fintech.refactoring
 
 
-abstract class Pizza {
+abstract class Pizza : MenuItem() {
 
-    abstract val name: String
+    override var price: Double
+        get() = ingredients.sumOf { it.ingredient.price * it.count }
+        set(value) {}
+
     abstract val ingredients: List<IngredientWithCount>
 
     fun calculateCost(): Double {
