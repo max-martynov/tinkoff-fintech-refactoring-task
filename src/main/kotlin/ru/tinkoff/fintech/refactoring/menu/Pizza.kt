@@ -1,4 +1,4 @@
-package ru.tinkoff.fintech.refactoring
+package ru.tinkoff.fintech.refactoring.menu
 
 
 abstract class Pizza : MenuItem() {
@@ -8,10 +8,6 @@ abstract class Pizza : MenuItem() {
         set(value) {}
 
     abstract val ingredients: List<IngredientWithCount>
-
-    fun calculateCost(): Double {
-        return ingredients.sumOf { it.ingredient.price * it.count }
-    }
 
 }
 

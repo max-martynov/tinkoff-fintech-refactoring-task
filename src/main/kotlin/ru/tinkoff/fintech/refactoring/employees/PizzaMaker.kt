@@ -1,4 +1,7 @@
-package ru.tinkoff.fintech.refactoring
+package ru.tinkoff.fintech.refactoring.employees
+
+import ru.tinkoff.fintech.refactoring.menu.Pizza
+
 
 class PizzaMaker {
 

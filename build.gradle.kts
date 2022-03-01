@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.6.10"
+    application
 }
 
 group = "ru.tinkoff"
@@ -11,4 +12,8 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+}
+
+application {
+    mainClass.set("ru.tinkoff.fintech.refactoring.MainKt")
 }

@@ -1,4 +1,4 @@
-package ru.tinkoff.fintech.refactoring
+package ru.tinkoff.fintech.refactoring.menu
 
 
 abstract class Ingredient {

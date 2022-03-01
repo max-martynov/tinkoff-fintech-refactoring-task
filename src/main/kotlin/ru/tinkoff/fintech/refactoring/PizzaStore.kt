@@ -1,64 +1,45 @@
 package ru.tinkoff.fintech.refactoring
 
+import ru.tinkoff.fintech.refactoring.employees.*
+import ru.tinkoff.fintech.refactoring.menu.Menu
 
 
+class PizzaStore(
+    private val menu: Menu,
+    private val pizzaMaker: PizzaMaker,
+    private val barista: Barista
+) {
 
-class PizzaStore {
     var orderNumber = 0
 
-    private val pizzaMaker: Employee = PizzaMaker()
-    private val barista: Employee = Barista()
-
-    fun orderCoffee(name: String): CoffeeOrder {
-        val coffee = Coffee.getCoffeeByName(name)
-            ?: error("Неизвестный вид кофе!")
+    fun orderCoffee(name: String): CoffeeOrder? {
+        val coffee = menu.findCoffeeByName(name)
+            ?: return null
 
         return CoffeeOrder(
             number = ++orderNumber,
-            pizza = coffee
+            coffee = coffee
         )
     }
 
-    fun orderPizza(name: String): PizzaOrder {
-        val pizza = Pizza(name)
-        val ingredients = getIngredient(pizza)
-        var pizzaPrice = 0.0
-        ingredients.forEach { ingredient ->
-            val ingredientName = ingredient.first
-            val ingredientCount = ingredient.second
-
-            val price = when (ingredientName) {
-                "яйца" -> 3.48
-                "бекон" -> 6.48
-                "тесто" -> 1.00
-                "томат" -> 1.53
-                "оливки" -> 1.53
-                "сыр" -> 0.98
-                "пармезан" -> 3.98
-                "грибы" -> 3.34
-                "спаржа" -> 3.34
-                "мясное ассорти" -> 9.38
-                "вяленая говядина" -> 12.24
-                else -> error("Неизвестный ингредиент")
-            }
-
-            pizzaPrice += price * ingredientCount
-        }
+    fun orderPizza(name: String): PizzaOrder? {
+        val pizza = menu.findPizzaByName(name)
+            ?: return null
 
         return PizzaOrder(
             number = ++orderNumber,
-            pizza = pizza,
-            price = pizzaPrice
+            pizza = pizza
         )
     }
 
     fun executeOrder(pizzaOrder: PizzaOrder? = null, coffeeOrder: CoffeeOrder? = null) {
         if (pizzaOrder != null) {
-            pizzaMaker.makePizza(pizzaOrder.number, pizzaOrder.pizza, getIngredient(pizzaOrder.pizza))
+            pizzaMaker.makePizza(pizzaOrder.number, pizzaOrder.pizza)
         }
 
         if (coffeeOrder != null) {
-            barista.makeCoffee(coffeeOrder.number, coffeeOrder.pizza)
+            barista.makeCoffee(coffeeOrder.number, coffeeOrder.coffee)
         }
     }
+
 }
