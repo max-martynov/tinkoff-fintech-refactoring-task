@@ -5,10 +5,10 @@ import ru.tinkoff.fintech.refactoring.menu.*
 
 
 fun main() {
-    val pizzaSet = setOf(Carbonara(), Marinara(), Sardinia(), Valtellina(), Peasant())
-    val coffeeSet = setOf(Espresso(), Cappuccino())
+    val pizzaByName = listOf(Carbonara(), Marinara(), Sardinia(), Valtellina(), Peasant()).associateBy { it.name }
+    val coffeeByName = listOf(Espresso(), Cappuccino()).associateBy { it.name }
     val pizzaStore = PizzaStore(
-        Menu(pizzaSet, coffeeSet),
+        Menu(pizzaByName, coffeeByName),
         PizzaMaker(),
         Barista()
     )

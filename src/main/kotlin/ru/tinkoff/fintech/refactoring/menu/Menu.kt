@@ -1,11 +1,11 @@
 package ru.tinkoff.fintech.refactoring.menu
 
-class Menu(private val pizzaSet: Set<Pizza>, private val coffeeSet: Set<Coffee>) {
+class Menu(private val pizzaByName: Map<String, Pizza>, private val coffeeByName: Map<String, Coffee>) {
 
     fun findPizzaByName(pizzaName: String): Pizza? =
-        pizzaSet.find { it.name == pizzaName }
+        pizzaByName[pizzaName]
 
     fun findCoffeeByName(coffeeName: String): Coffee? =
-        coffeeSet.find { it.name == coffeeName }
+        coffeeByName[coffeeName]
 
 }
