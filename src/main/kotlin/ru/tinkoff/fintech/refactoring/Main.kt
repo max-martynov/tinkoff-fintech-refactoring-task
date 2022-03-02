@@ -2,6 +2,7 @@ package ru.tinkoff.fintech.refactoring
 
 import ru.tinkoff.fintech.refactoring.employees.*
 import ru.tinkoff.fintech.refactoring.menu.*
+import ru.tinkoff.fintech.refactoring.pizzaStore.PizzaStore
 
 
 fun main() {
@@ -12,7 +13,10 @@ fun main() {
         PizzaMaker(),
         Barista()
     )
-    val pizzaOrder = pizzaStore.orderPizza("Маринара")
-    val coffeeOrder = pizzaStore.orderCoffee("Капучино")
-    pizzaStore.executeOrder(pizzaOrder, coffeeOrder)
+    try {
+        pizzaStore.orderPizza("Маринара")
+        pizzaStore.orderCoffee("Капучино")
+    } catch (e: NoSuchElementException) {
+        println("[Кассир]: ${e.message}")
+    }
 }
